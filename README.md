@@ -4,11 +4,12 @@ Ce projet utilise PostgreSQL et MonetDB pour l'analyse de données.
 
 ## 📋 Table des matières
 
-- [Prérequis](#prérequis)
-- [Configuration](#configuration)
-- [Installation](#installation)
-- [Vérification](#vérification)
-- [Dépannage](#dépannage)
+- [Prérequis](#-prérequis)
+- [Configuration](#️-configuration)
+- [Installation](#-installation)
+- [Vérification](#-vérification)
+- [Dépannage](#-dépannage)
+- [Support](#-support)
 
 ## 🔧 Prérequis
 
@@ -56,7 +57,7 @@ sudo postgresql-setup --initdb
 1. **Clonage du repository**
 
    ```bash
-   git clone [URL_DU_REPO]
+   git clone git@github.com:GregoireBDN/Database-Analyzer.git
    cd DataBaseAnalyzer
    ```
 
@@ -141,7 +142,3 @@ Si vous rencontrez des problèmes :
 1. Consultez la section dépannage ci-dessus
 2. Vérifiez les logs des services
 3. Ouvrez une issue sur GitHub
-
----
-
-_Développé avec ❤️ pour l'analyse de données_
