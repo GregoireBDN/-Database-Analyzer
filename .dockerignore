@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# Données et résultats
+results/*
+data/*
+!data/crimes.csv
+!data/air_quality.csv
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+.coverage
+htmlcov/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+.docker/
+docker-compose*.yml
+docker-compose*.yaml
+Dockerfile.*
+
+# IDE et éditeurs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Documentation
+docs/
+*.md
+LICENSE
+
+# Tests
+tests/
+pytest.ini
+.pytest_cache/
+
+# Système
+.DS_Store
+Thumbs.db
