@@ -1,5 +1,5 @@
 import os
-from ..base_classes import DatabaseConnector
+from src.base_classes import DatabaseConnector
 from sqlalchemy import create_engine
 
 class PostgresConnector(DatabaseConnector):

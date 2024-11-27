@@ -1,4 +1,4 @@
-from ..base_classes import DatabaseConnector
+from src.base_classes import DatabaseConnector
 import pymonetdb
 import os
 

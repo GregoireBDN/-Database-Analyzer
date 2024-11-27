@@ -59,8 +59,6 @@ class QueryAnalyzer(ABC):
         """Analyse plusieurs requêtes"""
         results = []
         for i, query in enumerate(queries, 1):
-            print(f"\nAnalyse de la requête {i}:")
-            print(f"SQL: {query}")
             metrics = self.analyze_query(query)
             if metrics:
                 results.append(metrics)

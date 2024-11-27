@@ -1,4 +1,4 @@
-from ..base_classes import QueryAnalyzer
+from src.base_classes import QueryAnalyzer
 from sqlalchemy import text
 from typing import Dict
 
