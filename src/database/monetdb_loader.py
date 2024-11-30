@@ -31,7 +31,7 @@ class MonetDBLoader(DatabaseLoader):
             print(f"   ℹ️  Table existante ({row_count:,} lignes)")
             return {
                 'table_name': nom_table,
-                'load_time': 0.001,  # Valeur minimale pour éviter la division par zéro
+                'load_time': 0.001,
                 'total_rows': row_count
             }
 
@@ -53,15 +53,21 @@ class MonetDBLoader(DatabaseLoader):
                   for row in df.values]
         placeholders = ",".join(["%s" for _ in df.columns])
         
-        with tqdm(total=total_rows, unit='lignes', ncols=80) as pbar:
-            for i in range(0, len(valeurs), batch_size):
-                batch = valeurs[i:i + batch_size]
-                cursor.executemany(
-                    f"INSERT INTO {nom_table} VALUES ({placeholders})",
-                    batch
-                )
-                conn.commit()
-                pbar.update(len(batch))
+        # Modification de tqdm pour un affichage plus propre
+        with tqdm(total=total_rows, unit='lignes', ncols=80, 
+                 bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt}') as pbar:
+            try:
+                for i in range(0, len(valeurs), batch_size):
+                    batch = valeurs[i:i + batch_size]
+                    cursor.executemany(
+                        f"INSERT INTO {nom_table} VALUES ({placeholders})",
+                        batch
+                    )
+                    conn.commit()
+                    pbar.update(len(batch))
+            except Exception as e:
+                print(f"\n   ❌ Erreur lors de l'insertion : {str(e)}")
+                return None
         
         end_time = time.time()
         total_time = end_time - start_time

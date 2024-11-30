@@ -4,6 +4,7 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Fonction pour démarrer un service selon l'OS
@@ -38,6 +39,22 @@ setup_postgres_path() {
 # Fonction pour vérifier PostgreSQL
 check_postgresql() {
     setup_postgres_path
+    
+    # Vérifier spécifiquement PostgreSQL 15 sur macOS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        if ! brew list postgresql@15 &>/dev/null; then
+            echo -e "${RED}❌ PostgreSQL 15 n'est pas installé via Homebrew${NC}"
+            return 1
+        fi
+        
+        # Vérifier si le service est en cours d'exécution
+        if ! brew services list | grep postgresql@15 | grep started &>/dev/null; then
+            echo -e "${YELLOW}⚠️  PostgreSQL 15 est installé mais n'est pas démarré${NC}"
+            echo -e "${BLUE}Démarrage du service...${NC}"
+            brew services start postgresql@15
+        fi
+    fi
+    
     if ! command -v psql &> /dev/null; then
         return 1
     fi
@@ -47,7 +64,16 @@ check_postgresql() {
 # Fonction pour installer PostgreSQL selon l'OS
 install_postgresql() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo -e "${BLUE}Installation de PostgreSQL via Homebrew...${NC}"
+        if ! command -v brew &> /dev/null; then
+            echo -e "${RED}❌ Homebrew n'est pas installé${NC}"
+            echo -e "${BLUE}Installation de Homebrew...${NC}"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            if [ $? -ne 0 ]; then
+                echo -e "${RED}❌ Erreur lors de l'installation de Homebrew${NC}"
+                return 1
+            fi
+        fi
+        echo -e "${BLUE}Installation de PostgreSQL 15 via Homebrew...${NC}"
         brew install postgresql@15
         start_service postgresql@15
         setup_postgres_path
@@ -186,6 +212,7 @@ echo -e "${BLUE}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            Initialisation du projet
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+
 
 # Rendre les scripts exécutables
 chmod +x setup_databases.sh
