@@ -5,7 +5,9 @@
 1. [Introduction](#-introduction)
 2. [Auteurs](#-auteurs)
 3. [Objectifs](#-objectifs-du-projet)
-4. [Prérequis](#-prérequis)
+4. [Prérequis et Données](#-prérequis-et-données)
+   - [Prérequis système](#prérequis-système)
+   - [Données requises](#données-requises)
 5. [Installation](#-installation)
    - [Installation rapide](#-installation-rapide)
    - [Installation détaillée](#-installation-détaillée)
@@ -49,7 +51,9 @@ Ce projet vise à :
   - Requêtes temporelles
 - Fournir des visualisations claires et détaillées des résultats
 
-## 📋 Prérequis
+## 📋 Prérequis et Données
+
+### Prérequis système
 
 - Git
 - Docker et Docker Compose
@@ -62,6 +66,39 @@ Le script d'installation s'occupera automatiquement de :
 - L'installation des SGBD
 - La configuration de l'environnement
 - L'importation des données de test
+
+### Données requises
+
+En raison de leur taille, les fichiers de données ne sont pas inclus directement dans le dépôt. Vous devez les télécharger séparément :
+
+#### Sources des données
+
+- **Air Quality Data** : [NYC Open Data - Air Quality](https://catalog.data.gov/dataset/air-quality)
+
+  - Description : Données de surveillance de la qualité de l'air à New York
+  - Format : CSV
+  - Placer dans : `data/air_quality.csv`
+
+- **Crime Data** : [LA City - Crime Data 2020 to Present](https://catalog.data.gov/dataset/crime-data-from-2020-to-present)
+  - Description : Données sur la criminalité à Los Angeles depuis 2020
+  - Format : CSV
+  - Placer dans : `data/crimes.csv`
+
+#### Installation des données
+
+1. Créer le dossier `data` s'il n'existe pas :
+
+   ```bash
+   mkdir -p data
+   ```
+
+2. Télécharger les fichiers CSV et les placer dans le dossier `data/`
+
+3. Vérifier que les fichiers sont correctement nommés :
+   - `data/air_quality.csv`
+   - `data/crimes.csv`
+
+Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
 
 ## 🚀 Installation
 
