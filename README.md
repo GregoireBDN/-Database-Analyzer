@@ -17,7 +17,7 @@
    - [Analyse des performances](#analyse-des-performances)
    - [Visualisation](#visualisation)
 8. [Résultats](#-résultats)
-9. [Dépannage](#-dépannage)
+9. [Licence](#-licence)
 
 ## 📝 Introduction
 
@@ -48,7 +48,6 @@ Ce projet vise à :
   - Requêtes de sélection simple
   - Jointures complexes
   - Agrégations
-  - Requêtes temporelles
 - Fournir des visualisations claires et détaillées des résultats
 
 ## 📋 Prérequis et Données
@@ -77,28 +76,10 @@ En raison de leur taille, les fichiers de données ne sont pas inclus directemen
 
   - Description : Données de surveillance de la qualité de l'air à New York
   - Format : CSV
-  - Placer dans : `data/air_quality.csv`
 
 - **Crime Data** : [LA City - Crime Data 2020 to Present](https://catalog.data.gov/dataset/crime-data-from-2020-to-present)
   - Description : Données sur la criminalité à Los Angeles depuis 2020
   - Format : CSV
-  - Placer dans : `data/crimes.csv`
-
-#### Installation des données
-
-1. Créer le dossier `data` s'il n'existe pas :
-
-   ```bash
-   mkdir -p data
-   ```
-
-2. Télécharger les fichiers CSV et les placer dans le dossier `data/`
-
-3. Vérifier que les fichiers sont correctement nommés :
-   - `data/air_quality.csv`
-   - `data/crimes.csv`
-
-Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
 
 ## 🚀 Installation
 
@@ -119,10 +100,28 @@ Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `d
    ```
 
 3. **Lancer l'installation et l'analyse**
+
    ```bash
    chmod +x run.sh
    ./run.sh
    ```
+
+4. **Installation des données**
+
+5. Créer le dossier `data` s'il n'existe pas :
+
+```bash
+mkdir -p data
+```
+
+2. Télécharger les fichiers CSV et les placer dans le dossier `data/`
+
+3. Vérifier que les fichiers sont correctement nommés :
+
+- `data/air_quality.csv`
+- `data/crimes.csv`
+
+Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
 
 ### Installation détaillée
 
@@ -136,10 +135,20 @@ Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `d
 
 2. **Préparation des données**
 
-   - Placer vos fichiers CSV dans le dossier `data/`
-   - Format attendu :
-     - air_quality.csv : données de qualité de l'air
-     - crimes.csv : données de criminalité
+   1. Créer le dossier `data` s'il n'existe pas :
+
+   ```bash
+   mkdir -p data
+   ```
+
+3. Télécharger les fichiers CSV et les placer dans le dossier `data/`
+
+4. Vérifier que les fichiers sont correctement nommés :
+
+- `data/air_quality.csv`
+- `data/crimes.csv`
+
+Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
 
 3. **Lancement des services**
 
@@ -248,76 +257,6 @@ Points clés :
    - PostgreSQL performe mieux sur les requêtes de sélection simples
    - Les différences de performance sont plus marquées sur le jeu de données "Crimes" (plus volumineux)
 
-## 🛠 Dépannage
-
-En cas de problèmes, vérifiez les points suivants :
-
-| Problème              | Solution                                              |
-| --------------------- | ----------------------------------------------------- |
-| Services non démarrés | Vérifiez le statut des services PostgreSQL et MonetDB |
-| Erreurs MonetDB       | Consultez `./data/monetdb/merovingian.log`            |
-| Ports occupés         | Vérifiez si les ports 5432 et 50000 sont disponibles  |
-| Permissions           | Assurez-vous que `./data` a les bonnes permissions    |
-| Python non installé   | Le script proposera de l'installer automatiquement    |
-
-## 📫 Support et Contact
-
-Pour toute question ou problème :
-
-1. Consultez la section dépannage ci-dessus
-2. Vérifiez les logs des services
-3. Ouvrez une issue sur GitHub
-4. Contactez les auteurs :
-   - Grégoire BODIN (gregoire.bodin@etu.univ-nantes.fr)
-   - Léo BERNARD-BORDIER (leo.bernard-bordier@etu.univ-nantes.fr)
-
 ## 📝 Licence
 
 Ce projet a été développé dans un cadre universitaire à l'Université de Rennes.
-
-## 🔍 Fonctionnalités détaillées
-
-### Configuration automatique
-
-- Installation et configuration des SGBD
-- Création des bases de données et des tables
-- Import automatique des données
-- Configuration des index et optimisations
-
-### Analyse des performances
-
-- Mesure précise des temps d'exécution
-- Analyse de l'utilisation des ressources
-- Comparaison des stratégies d'indexation
-- Tests de charge et de concurrence
-
-### Visualisation
-
-- Graphiques comparatifs détaillés
-- Export des résultats en PNG
-- Métriques détaillées par type de requête
-- Analyse des temps de chargement
-
-## 📊 Résultats
-
-Les résultats sont générés dans le dossier `results/` et comprennent :
-
-- **Graphiques de performance**
-
-  - Temps d'exécution par type de requête
-  - Comparaison des temps de chargement
-  - Impact des index sur les performances
-
-- **Rapports détaillés**
-  - Métriques par requête
-  - Statistiques d'utilisation des ressources
-  - Analyse comparative complète
-
-## 🛠 Dépannage
-
-| Problème              | Solution                       |
-| --------------------- | ------------------------------ |
-| Services non démarrés | `docker compose restart`       |
-| Erreurs de connexion  | Vérifier les ports dans `.env` |
-| Problèmes de données  | Vérifier les fichiers CSV      |
-| Manque de mémoire     | Augmenter la RAM Docker        |
