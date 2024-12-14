@@ -9,8 +9,10 @@
    - [Prérequis système](#prérequis-système)
    - [Données requises](#données-requises)
 5. [Installation](#-installation)
-   - [Installation rapide](#-installation-rapide)
-   - [Installation détaillée](#-installation-détaillée)
+   - [Prérequis système](#prérequis-système)
+   - [Installation du projet](#installation-du-projet)
+   - [Installation des données](#installation-des-données)
+   - [Lancement de l'analyse](#lancement-de-lanalyse)
 6. [Structure du projet](#-structure-du-projet)
 7. [Fonctionnalités](#-fonctionnalités)
    - [Configuration automatique](#configuration-automatique)
@@ -83,7 +85,14 @@ En raison de leur taille, les fichiers de données ne sont pas inclus directemen
 
 ## 🚀 Installation
 
-### Installation rapide
+### Prérequis système
+
+- Git
+- Docker et Docker Compose
+- 4 Go de RAM minimum
+- 2 Go d'espace disque disponible
+
+### Installation du projet
 
 1. **Cloner le repository**
 
@@ -93,73 +102,47 @@ En raison de leur taille, les fichiers de données ne sont pas inclus directemen
    ```
 
 2. **Configurer l'environnement**
-
    ```bash
    cp .env.example .env
    # Modifier les variables dans .env si nécessaire
    ```
 
-3. **Lancer l'installation et l'analyse**
+### Installation des données
 
-   ```bash
-   chmod +x run.sh
-   ./run.sh
-   ```
+En raison de leur taille, les fichiers de données doivent être téléchargés séparément :
 
-4. **Installation des données**
+#### Sources des données
 
-5. Créer le dossier `data` s'il n'existe pas :
+- **Air Quality Data** : [NYC Open Data - Air Quality](https://catalog.data.gov/dataset/air-quality)
 
-```bash
-mkdir -p data
-```
+  - Description : Données de surveillance de la qualité de l'air à New York
+  - Format : CSV
+  - Placer dans : `data/air_quality.csv`
 
-2. Télécharger les fichiers CSV et les placer dans le dossier `data/`
+- **Crime Data** : [LA City - Crime Data 2020 to Present](https://catalog.data.gov/dataset/crime-data-from-2020-to-present)
+  - Description : Données sur la criminalité à Los Angeles depuis 2020
+  - Format : CSV
+  - Placer dans : `data/crimes.csv`
 
-3. Vérifier que les fichiers sont correctement nommés :
+#### Préparation des données
 
-- `data/air_quality.csv`
-- `data/crimes.csv`
-
-Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
-
-### Installation détaillée
-
-1. **Configuration de l'environnement**
-
-   - Copier `.env.example` vers `.env`
-   - Ajuster les paramètres selon vos besoins :
-     - Ports des bases de données
-     - Identifiants de connexion
-     - Taille des lots de données
-
-2. **Préparation des données**
-
-   1. Créer le dossier `data` s'il n'existe pas :
-
+1. Créer le dossier `data` :
    ```bash
    mkdir -p data
    ```
+2. Télécharger et placer les fichiers CSV dans `data/`
+3. Vérifier les noms des fichiers :
+   - `data/air_quality.csv`
+   - `data/crimes.csv`
 
-3. Télécharger les fichiers CSV et les placer dans le dossier `data/`
+### Lancement de l'analyse
 
-4. Vérifier que les fichiers sont correctement nommés :
+Une fois les données installées :
 
-- `data/air_quality.csv`
-- `data/crimes.csv`
-
-Note : Ces fichiers sont nécessaires pour exécuter les analyses. Le dossier `data/` est ignoré par Git en raison de la taille des fichiers.
-
-3. **Lancement des services**
-
-   ```bash
-   docker compose up -d
-   ```
-
-4. **Vérification de l'installation**
-   ```bash
-   docker compose ps
-   ```
+```bash
+chmod +x run.sh
+./run.sh
+```
 
 ## 📁 Structure du projet
 
