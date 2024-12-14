@@ -16,7 +16,8 @@
    - [Analyse des performances](#analyse-des-performances)
    - [Visualisation](#visualisation)
 7. [Résultats](#-résultats)
-8. [Licence](#-licence)
+8. [Explication des différences de performance ](#-explication-des-différences-de-performance)
+9. [Licence](#-licence)
 
 ## 📝 Introduction
 
@@ -207,6 +208,57 @@ Points clés :
    - PostgreSQL performe mieux sur des requêtes de jointure sur un faible volume de données
 
    - MonetDB excelle sur l'ensemble des requêtes avec des volumes de données plus importants
+
+## 📝 Explication des différences de performance
+
+### 1. Chargement des données
+
+PostgreSQL est plus rapide au chargement initial car :
+
+- Il utilise une architecture orientée ligne (row-oriented)
+- Les données sont directement écrites dans le format de stockage final
+- Optimisé pour les insertions ligne par ligne
+
+MonetDB est plus lent au chargement car :
+
+- Il utilise une architecture orientée colonne (column-oriented)
+- Les données doivent être réorganisées par colonne lors du chargement
+- Nécessite plus d'opérations de transformation des données
+
+### 2. Exécution des requêtes
+
+#### Sur petit volume de données :
+
+PostgreSQL performe mieux car :
+
+- L'architecture row-oriented permet d'accéder rapidement à toutes les colonnes d'une ligne
+- Les index sont plus efficaces sur de petits volumes
+- La mémoire cache du système est suffisante
+
+#### Sur grand volume de données :
+
+MonetDB devient plus performant car :
+
+- L'architecture column-oriented permet de ne lire que les colonnes nécessaires
+- Meilleure compression des données
+- Optimisé pour les opérations analytiques (OLAP)
+- Utilisation efficace de la vectorisation CPU
+
+### 3. Impact du type d'architecture
+
+**PostgreSQL (Row-oriented)**
+
+- ✅ Efficace pour les transactions (OLTP)
+- ✅ Bon pour les petits ensembles de données
+- ❌ Doit lire toutes les colonnes même si non utilisées
+- ❌ Moins efficace pour l'analyse de grandes quantités
+
+**MonetDB (Column-oriented)**
+
+- ✅ Excellent pour l'analyse (OLAP)
+- ✅ Lecture sélective des colonnes
+- ❌ Chargement initial plus lent
+- ❌ Moins efficace pour les transactions unitaires
 
 ## 📝 Licence
 
