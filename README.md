@@ -190,6 +190,7 @@ Points clés :
 
 - MonetDB montre un temps de chargement plus élevé (0.37 ms/ligne vs 0.05 ms/ligne pour PostgreSQL)
 - PostgreSQL présente des temps d'exécution significativement plus élevés pour :
+  - Les sélections (Q1) : ~100ms vs ~15ms pour MonetDB
   - Les agrégations (Q2) : ~400ms vs ~15ms pour MonetDB
   - Les jointures (Q3) : ~325ms vs ~20ms pour MonetDB
 - MonetDB maintient des performances constantes sur tous les types de requêtes
@@ -202,9 +203,10 @@ Points clés :
    - MonetDB montre des temps de chargement 7-8x plus élevés
 
 2. **Exécution des requêtes** :
-   - MonetDB excelle dans les opérations d'agrégation et de jointure sur grands volumes
-   - PostgreSQL performe mieux sur les requêtes de sélection simples
-   - Les différences de performance sont plus marquées sur le jeu de données "Crimes" (plus volumineux)
+
+   - PostgreSQL performe mieux sur des requêtes de jointure sur un faible volume de données
+
+   - MonetDB excelle sur l'ensemble des requêtes avec des volumes de données plus importants
 
 ## 📝 Licence
 
