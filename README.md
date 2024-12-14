@@ -216,7 +216,7 @@ Les résultats de l'analyse sont générés dans le dossier `results/` et inclue
 
 ### Analyse de la Qualité de l'Air
 
-![Analyse Qualité Air](results/air_quality_analysis.png)
+![Analyse Qualité Air](results/air_quality_performance.png)
 
 Les résultats montrent que :
 
@@ -226,7 +226,7 @@ Les résultats montrent que :
 
 ### Analyse des Crimes
 
-![Analyse Crimes](results/crimes_analysis.png)
+![Analyse Crimes](results/crimes_performance.png)
 
 Points clés :
 
