@@ -1,9 +1,6 @@
 # Environment variables
 .env
 
-# Databases
-/data/
-
 # IDE files
 .idea/
 .vscode/

@@ -1,77 +1,78 @@
-version: "3.8"
-
 services:
-  app:
-    build: .
-    container_name: python_app
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - db_network
+
+  monetdb:
+    build:
+      context: .
+      dockerfile: docker/monetdb/Dockerfile
+    environment:
+      - MONETDB_DATABASE=${MONETDB_DB}
+      - MONETDB_USER=${MONETDB_USER}
+      - MONETDB_PASSWORD=${MONETDB_PASSWORD}
+    ports:
+      - "${MONETDB_PORT}:50000"
+    volumes:
+      - monetdb_data:/var/monetdb5/dbfarm
+    healthcheck:
+      test: ["CMD", "monetdb", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - db_network
+
+  analyzer:
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - MONETDB_USER=${MONETDB_USER}
+      - MONETDB_PASSWORD=${MONETDB_PASSWORD}
+      - MONETDB_DB=${MONETDB_DB}
+      - MONETDB_HOST=monetdb
+      - MONETDB_PORT=50000
+      - BATCH_SIZE=${BATCH_SIZE}
+      - DATA_DIR=${DATA_DIR}
     volumes:
       - ./data:/app/data
+      - ./results:/app/results
+      - ./.env:/app/.env
     depends_on:
       postgres:
         condition: service_healthy
       monetdb:
         condition: service_healthy
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - POSTGRES_DB=${POSTGRES_DB:-databaseAnnalizationProject}
-      - POSTGRES_HOST=postgres
-      - MONETDB_USER=${MONETDB_USER:-monetdb}
-      - MONETDB_PASSWORD=${MONETDB_PASSWORD:-monetdb}
-      - MONETDB_DB=${MONETDB_DB:-databaseAnnalizationProject}
-      - MONETDB_HOST=monetdb
-
-  postgres:
-    image: postgres:15
-    container_name: postgres_db
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-databaseAnnalizationProject}
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-scripts:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  monetdb:
-    image: monetdb/monetdb:latest
-    container_name: monet_db
-    environment:
-      MDB_DB_NAME: ${MONETDB_DB:-databaseAnnalizationProject}
-      MDB_USER: ${MONETDB_USER:-monetdb}
-      MDB_PASSWORD: ${MONETDB_PASSWORD:-monetdb}
-    ports:
-      - "50001:50000"
-    volumes:
-      - monetdb_data:/var/monetdb5/dbfarm
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "mclient",
-          "-u",
-          "${MONETDB_USER:-monetdb}",
-          "-d",
-          "${MONETDB_DB:-databaseAnnalizationProject}",
-          "-p",
-          "${MONETDB_PASSWORD:-monetdb}",
-          "-s",
-          "SELECT 1",
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    networks:
+      - db_network
 
 volumes:
   postgres_data:
   monetdb_data:
 
 networks:
-  default:
-    name: benchmark_network
+  db_network:
+    driver: bridge
