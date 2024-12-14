@@ -227,38 +227,119 @@ MonetDB est plus lent au chargement car :
 
 ### 2. Exécution des requêtes
 
-#### Sur petit volume de données :
+#### Sur petit volume de données
 
 PostgreSQL performe mieux car :
 
-- L'architecture row-oriented permet d'accéder rapidement à toutes les colonnes d'une ligne
-- Les index sont plus efficaces sur de petits volumes
-- La mémoire cache du système est suffisante
+**Architecture row-oriented optimisée**
 
-#### Sur grand volume de données :
+- Les données d'une même ligne sont stockées de manière contiguë
+- Accès rapide à toutes les colonnes d'une ligne en une seule lecture disque
+- Idéal pour les requêtes OLTP qui accèdent à plusieurs colonnes d'une même ligne
 
-MonetDB devient plus performant car :
+**Gestion efficace des index**
 
-- L'architecture column-oriented permet de ne lire que les colonnes nécessaires
-- Meilleure compression des données
-- Optimisé pour les opérations analytiques (OLAP)
-- Utilisation efficace de la vectorisation CPU
+- Index B-tree optimisés pour les petits volumes
+- Maintenance des index moins coûteuse
+- Statistiques précises pour l'optimiseur de requêtes
+- Mise à jour rapide des index lors des modifications
+
+**Utilisation optimale du cache**
+
+- Les données fréquemment accédées restent en cache
+- Buffer pool bien dimensionné pour petits volumes
+- Prédiction de lecture efficace
+- Moins de défauts de cache (cache misses)
+
+#### Sur grand volume de données
+
+MonetDB devient plus performant grâce à :
+
+**Architecture column-oriented optimisée**
+
+- Stockage par colonne permettant :
+  - Lecture sélective des colonnes nécessaires
+  - Réduction drastique des I/O disque
+  - Meilleure utilisation de la bande passante
+
+**Compression avancée des données**
+
+- Compression par colonne plus efficace
+- Algorithmes spécialisés par type de données
+- Décompression à la volée optimisée
+- Réduction significative de l'empreinte mémoire
+
+**Optimisations OLAP**
+
+- Matérialisation tardive des résultats
+- Parallélisation automatique des requêtes
+- Optimisations spécifiques aux agrégations
+- Gestion efficace des jointures sur grandes tables
+
+**Vectorisation et parallélisation**
+
+- Instructions CPU vectorielles (SIMD)
+- Traitement parallèle des colonnes
+- Pipeline d'exécution optimisé
+- Utilisation maximale des cœurs CPU
 
 ### 3. Impact du type d'architecture
 
-**PostgreSQL (Row-oriented)**
+#### PostgreSQL (Row-oriented)
 
-- ✅ Efficace pour les transactions (OLTP)
-- ✅ Bon pour les petits ensembles de données
-- ❌ Doit lire toutes les colonnes même si non utilisées
-- ❌ Moins efficace pour l'analyse de grandes quantités
+✅ **Avantages**
 
-**MonetDB (Column-oriented)**
+- Transactions OLTP performantes
+  - Verrouillage fin au niveau ligne
+  - ACID strict
+  - Commit/Rollback rapides
+- Efficace sur petits volumes
+  - Cache hit ratio élevé
+  - Peu de fragmentation
+  - Index compacts
+- Mise à jour rapide
+  - Une seule écriture par modification
+  - Journalisation optimisée
+  - Moins de fragmentation
 
-- ✅ Excellent pour l'analyse (OLAP)
-- ✅ Lecture sélective des colonnes
-- ❌ Chargement initial plus lent
-- ❌ Moins efficace pour les transactions unitaires
+❌ **Inconvénients**
+
+- Lecture de données inutiles
+  - Charge I/O plus importante
+  - Gaspillage de bande passante
+  - Cache pollué par données non utilisées
+- Performances limitées sur gros volumes
+  - Scalabilité verticale principalement
+  - Compression moins efficace
+  - Plus de mouvements de données
+
+#### MonetDB (Column-oriented)
+
+✅ **Avantages**
+
+- Analyses OLAP optimisées
+  - Agrégations rapides
+  - Jointures efficaces sur grandes tables
+  - Parallélisation naturelle
+- Compression efficace
+  - Ratio de compression élevé
+  - Moins d'I/O disque
+  - Meilleure utilisation mémoire
+- Évolutivité
+  - Scalabilité horizontale native
+  - Parallélisation automatique
+  - Vectorisation CPU
+
+❌ **Inconvénients**
+
+- Chargement initial lent
+  - Réorganisation des données
+  - Construction des index
+  - Compression des colonnes
+- Transactions complexes
+  - Verrouillage plus grossier
+  - Overhead de reconstruction
+  - Latence plus élevée
 
 ## 📝 Licence
 
