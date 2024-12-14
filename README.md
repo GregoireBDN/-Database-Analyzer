@@ -5,21 +5,18 @@
 1. [Introduction](#-introduction)
 2. [Auteurs](#-auteurs)
 3. [Objectifs](#-objectifs-du-projet)
-4. [Prérequis et Données](#-prérequis-et-données)
-   - [Prérequis système](#prérequis-système)
-   - [Données requises](#données-requises)
-5. [Installation](#-installation)
+4. [Installation](#-installation)
    - [Prérequis système](#prérequis-système)
    - [Installation du projet](#installation-du-projet)
    - [Installation des données](#installation-des-données)
    - [Lancement de l'analyse](#lancement-de-lanalyse)
-6. [Structure du projet](#-structure-du-projet)
-7. [Fonctionnalités](#-fonctionnalités)
+5. [Structure du projet](#-structure-du-projet)
+6. [Fonctionnalités](#-fonctionnalités)
    - [Configuration automatique](#configuration-automatique)
    - [Analyse des performances](#analyse-des-performances)
    - [Visualisation](#visualisation)
-8. [Résultats](#-résultats)
-9. [Licence](#-licence)
+7. [Résultats](#-résultats)
+8. [Licence](#-licence)
 
 ## 📝 Introduction
 
@@ -51,37 +48,6 @@ Ce projet vise à :
   - Jointures complexes
   - Agrégations
 - Fournir des visualisations claires et détaillées des résultats
-
-## 📋 Prérequis et Données
-
-### Prérequis système
-
-- Git
-- Docker et Docker Compose
-- 4 Go de RAM minimum
-- 2 Go d'espace disque disponible
-
-Le script d'installation s'occupera automatiquement de :
-
-- La création des conteneurs Docker
-- L'installation des SGBD
-- La configuration de l'environnement
-- L'importation des données de test
-
-### Données requises
-
-En raison de leur taille, les fichiers de données ne sont pas inclus directement dans le dépôt. Vous devez les télécharger séparément :
-
-#### Sources des données
-
-- **Air Quality Data** : [NYC Open Data - Air Quality](https://catalog.data.gov/dataset/air-quality)
-
-  - Description : Données de surveillance de la qualité de l'air à New York
-  - Format : CSV
-
-- **Crime Data** : [LA City - Crime Data 2020 to Present](https://catalog.data.gov/dataset/crime-data-from-2020-to-present)
-  - Description : Données sur la criminalité à Los Angeles depuis 2020
-  - Format : CSV
 
 ## 🚀 Installation
 
