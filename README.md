@@ -175,6 +175,42 @@ Les résultats de l'analyse sont générés dans le dossier `results/` et inclue
 - Graphiques de comparaison des temps d'exécution
 - Rapports détaillés par type de requête
 
+## 🛠 Aperçu des Résultats
+
+### Analyse de la Qualité de l'Air
+
+![Analyse Qualité Air](results/air_quality_analysis.png)
+
+Les résultats montrent que :
+
+- PostgreSQL est plus efficace pour le chargement initial (0.03 ms/ligne vs 0.22 ms/ligne pour MonetDB)
+- Les requêtes de sélection (Q1) et d'agrégation (Q2) sont similaires en performance
+- MonetDB montre des performances inférieures sur les jointures complexes (Q3) avec un temps d'exécution ~7x plus élevé
+
+### Analyse des Crimes
+
+![Analyse Crimes](results/crimes_analysis.png)
+
+Points clés :
+
+- MonetDB montre un temps de chargement plus élevé (0.37 ms/ligne vs 0.05 ms/ligne pour PostgreSQL)
+- PostgreSQL présente des temps d'exécution significativement plus élevés pour :
+  - Les agrégations (Q2) : ~400ms vs ~15ms pour MonetDB
+  - Les jointures (Q3) : ~325ms vs ~20ms pour MonetDB
+- MonetDB maintient des performances constantes sur tous les types de requêtes
+
+### Conclusions
+
+1. **Chargement des données** :
+
+   - PostgreSQL est plus efficace pour le chargement initial des données
+   - MonetDB montre des temps de chargement 7-8x plus élevés
+
+2. **Exécution des requêtes** :
+   - MonetDB excelle dans les opérations d'agrégation et de jointure sur grands volumes
+   - PostgreSQL performe mieux sur les requêtes de sélection simples
+   - Les différences de performance sont plus marquées sur le jeu de données "Crimes" (plus volumineux)
+
 ## 🛠 Dépannage
 
 En cas de problèmes, vérifiez les points suivants :
