@@ -137,12 +137,19 @@ Database-Analyzer/
 │   ├── air_quality.csv
 │   └── crime.csv
 ├── results/            # Graphiques générés
+├── raport/             # Rapport de projet en LaTeX
+│   ├── main.tex        # Fichier principal du rapport
+│   └── main.pdf        # Rapport compilé
 ├── run.sh              # Script de lancement
 ├── setup.py           # Configuration du package
 ├── docker-compose.yml # Configuration des services
 ├── .env.example       # Template des variables d'environnement
 └── README.md         # Documentation
 ```
+
+## 🔍 Rapport
+
+Vous pouvez consulter le rapport complet [ici](raport/main.pdf).
 
 ## 🔍 Fonctionnalités
 
