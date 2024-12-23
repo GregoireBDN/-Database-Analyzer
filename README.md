@@ -50,6 +50,10 @@ Ce projet vise à :
   - Agrégations
 - Fournir des visualisations claires et détaillées des résultats
 
+## 🔍 Rapport
+
+Vous pouvez consulter le rapport complet [ici](raport/main.pdf).
+
 ## 🚀 Installation
 
 ### Prérequis système
@@ -146,10 +150,6 @@ Database-Analyzer/
 ├── .env.example       # Template des variables d'environnement
 └── README.md         # Documentation
 ```
-
-## 🔍 Rapport
-
-Vous pouvez consulter le rapport complet [ici](raport/main.pdf).
 
 ## 🔍 Fonctionnalités
 
