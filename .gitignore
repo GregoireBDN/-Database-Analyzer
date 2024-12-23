@@ -38,3 +38,12 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Ignorer les fichiers auxiliaires LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.synctex.gz
+*.fdb_latexmk
