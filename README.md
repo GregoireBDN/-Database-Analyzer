@@ -52,7 +52,7 @@ Ce projet vise à :
 
 ## 🔍 Rapport
 
-Vous pouvez consulter le rapport complet [ici](raport/main.pdf).
+Vous pouvez consulter le rapport complet [ici](rapport/main.pdf).
 
 ## 🚀 Installation
 
